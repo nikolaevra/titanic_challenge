@@ -1,10 +1,6 @@
 # Data Preprocessing Template
 
 # Importing the libraries
-from sklearn.linear_model import LinearRegression
-import statsmodels.formula.api as sm
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.preprocessing import StandardScaler
@@ -59,6 +55,6 @@ y_pred = classifier.predict(X_test)
 
 accuracy = accuracy_score(answers, y_pred)
 
-pk.dump(classifier, open("save.p", "rb"))
+pk.dump(classifier, open("save.p", "rw"))
 
-retrained = pickle.load( open( "save.p", "rb" ) )
+# retrained = pickle.load( open( "save.p", "rb" ) )

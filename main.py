@@ -7,8 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+import pickle as pk
 
-# Importing datasets
+# Importing train datasets
 train = pd.read_csv('train.csv')
 
 # preparing training dataset
@@ -25,17 +29,13 @@ onehotencoder = OneHotEncoder(categorical_features=[0])
 X_train = onehotencoder.fit_transform(X_train).toarray()
 X_train = X_train[:, 1:]
 
-# Fitting Multiple Linear Regression to the Training set
-regressor = LinearRegression()
-regressor.fit(X_train, y_train)
-
-# Comparing to the test set
+# Importing and formatting test dataset
 test = pd.read_csv('test.csv')
+test = test.iloc[:, [0, 1, 3, 4, 5, 6, 8, 11]]
 
-test = test.iloc[:, [0, 1, 3, 4, 5, 6, 8]]
 test = test.dropna()
-ids = test.iloc[:, 0].values
-X_test = test.iloc[:, 1:].values
+answers = test.iloc[:, -1].values
+X_test = test.iloc[:, 1:-1].values
 
 # Encoding categorical data
 labelencoder = LabelEncoder()
@@ -45,19 +45,20 @@ onehotencoder = OneHotEncoder(categorical_features=[0])
 X_test = onehotencoder.fit_transform(X_test).toarray()
 X_test = X_test[:, 1:]
 
+# need to scale data before we start fitting it
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+# Fitting Multiple Linear Regression to the Training set
+classifier = LogisticRegression(random_state=0)
+classifier.fit(X_train, y_train)
+
 # Predicting the Test set results
-y_pred = regressor.predict(X_test)
+y_pred = classifier.predict(X_test)
 
-answers = pd.read_csv('gender_submission.csv')
-ans = answers.iloc[:, :].values
-ans_mat = np.hstack((np.transpose([ids]), np.transpose([y_pred])))
+accuracy = accuracy_score(answers, y_pred)
 
+pk.dump(classifier, open("save.p", "rb"))
 
-X = np.append(arr=np.ones((714, 1)).astype(int), values=X_train, axis=1)
-X_opt = X[:, [0, 1, 2, 3, 4, 5, 6]]
-regressor_OLS = sm.OLS(endog=y_train, exog=X_opt).fit()
-regressor_OLS.summary()
-X = np.append(arr=np.ones((714, 1)).astype(int), values=X_train, axis=1)
-X_opt = X[:, [0, 1, 2, 3, 4, 5]]
-regressor_OLS = sm.OLS(endog=y_train, exog=X_opt).fit()
-regressor_OLS.summary()
+retrained = pickle.load( open( "save.p", "rb" ) )

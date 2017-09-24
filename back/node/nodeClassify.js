@@ -1,27 +1,25 @@
 /**
  * Created by Ruslan on 9/23/2017.
  */
-const { spawn } = require('child_process');
+const CLASSIFIER = 'main.py';
 
-function pyPredictor(process) {
+let PythonShell = require('python-shell');
+
+const options = {
+    scriptPath: '../python',
+};
+
+
+function pyPredictor() {
     return new Promise((resolve, reject) => {
-        let process = spawn('dir');
-
-        process.stdout.on('data', (data) => {
-            resolve(data);
-        });
-
-        process.stdout.on('exit', function (code, signal) {
-            reject(`child process exited with code ${code} and signal ${signal}`);
-        });
-
-        process.stderr.on('data', function (code, signal) {
-            reject(`child process exited with code ${code} and signal ${signal}`);
+        PythonShell.run(CLASSIFIER, options, (err, results) => {
+            if (err) reject(err);
+            resolve(results);
         });
     });
 }
 
-pyPredictor(process).then((data) => {
+pyPredictor().then((data) => {
     console.log(data);
 }).catch((err) => {
     console.log(err);

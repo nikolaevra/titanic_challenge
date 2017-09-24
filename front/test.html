@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html><head>
+    <title>Titanic Challenge</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css">
+</head>
+<body>
+<form method="post" id="FSForm" action="https://nikolaevra.com/api" enctype="application/x-www-form-urlencoded" onsubmit="alert('not done yet')">
+    <!-- BEGIN_ITEMS -->
+    <div class="form_table">
+
+        <H1>Titanic Challenge Predictor</H1>
+        <article id="prediction_field" class="answer">Prediction:</article>
+        <div class="clear"></div>
+
+        <div id="q0" class="q required">
+            <a class="item_anchor" name="ItemAnchor0"></a>
+            <label class="question top_question" for="RESULT_RadioButton-0">Ticket Class&nbsp;<b class="icon_required">*</b></label>
+            <select id="RESULT_RadioButton-0" name="RESULT_RadioButton-0" class="drop_down" required>
+                <option></option>
+                <option value="Radio-0">Class 1</option>
+                <option value="Radio-1">Class 2</option>
+                <option value="Radio-2">Class 3</option>
+            </select>
+        </div>
+        <div id="q1" class="q required">
+            <a class="item_anchor" name="ItemAnchor1"></a>
+            <label class="question top_question" for="RESULT_RadioButton-1">Gender&nbsp;<b class="icon_required">*</b></label>
+            <select id="RESULT_RadioButton-1" name="RESULT_RadioButton-1" class="drop_down" required>
+                <option></option>
+                <option value="Radio-0">Male</option>
+                <option value="Radio-1">Female</option>
+            </select>
+        </div>
+        <div id="q2" class="q required">
+            <a class="item_anchor" name="ItemAnchor2"></a>
+            <label class="question top_question" for="RESULT_TextField-2">Age&nbsp;<b class="icon_required">*</b></label>
+            <input type="text" name="RESULT_TextField-2" class="text_field number_field" id="RESULT_TextField-2" size="25" maxlength="255" value="" required>
+        </div>
+        <div id="q4" class="q required">
+            <a class="item_anchor" name="ItemAnchor3"></a>
+            <label class="question top_question" for="RESULT_RadioButton-3"># of parents / children aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
+            <select id="RESULT_RadioButton-3" name="RESULT_RadioButton-3" class="drop_down" required>
+                <option></option>
+                <option value="Radio-0">1</option>
+                <option value="Radio-1">2</option>
+                <option value="Radio-2">3</option>
+                <option value="Radio-3">4</option>
+                <option value="Radio-4">5</option>
+                <option value="Radio-5">6</option>
+                <option value="Radio-6">7</option>
+            </select>
+        </div>
+        <div id="q3" class="q required">
+            <a class="item_anchor" name="ItemAnchor4"></a>
+            <label class="question top_question" for="RESULT_RadioButton-4"># of siblings / spouses aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
+            <select id="RESULT_RadioButton-4" name="RESULT_RadioButton-4" class="drop_down" required>
+                <option></option>
+                <option value="Radio-0">1</option>
+                <option value="Radio-1">2</option>
+                <option value="Radio-2">3</option>
+                <option value="Radio-3">4</option>
+                <option value="Radio-4">5</option>
+                <option value="Radio-5">6</option>
+                <option value="Radio-6">7</option>
+            </select>
+        </div>
+        <div id="q5" class="q required">
+            <a class="item_anchor" name="ItemAnchor5"></a>
+            <label class="question top_question" for="RESULT_TextField-5">Passanger Fare&nbsp;<b class="icon_required">*</b></label>
+            <input type="text" name="RESULT_TextField-5" class="text_field number_field" id="RESULT_TextField-5" size="25" maxlength="255" value="" required>
+        </div>
+        <div id="q6" class="q required">
+            <a class="item_anchor" name="ItemAnchor6"></a>
+            <label class="question top_question" for="RESULT_RadioButton-6">Port of Embarkation&nbsp;<b class="icon_required">*</b></label>
+            <select id="RESULT_RadioButton-6" name="RESULT_RadioButton-6" class="drop_down" required>
+                <option></option>
+                <option value="Radio-0">Cherbourg</option>
+                <option value="Radio-1">Queenstown</option>
+                <option value="Radio-2">Southampton</option>
+            </select>
+        </div>
+        <div class="clear"></div>
+
+    </div>
+    <!-- END_ITEMS -->
+    <input type="hidden" name="EParam" value="FzpUCZwnDno=">
+    <div class="outside_container">
+        <div class="buttons_reverse">
+            <input type="submit" name="Submit" value="Submit" class="submit_button" id="Ssubmit">
+        </div>
+    </div>
+    <div class="">
+        <img src="img/titanic-161614_640.png" alt="titanic image" class="titanic_img">
+    </div>
+</form>
+</body>
+</html>

@@ -6,6 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import pickle as pk
 import os.path
+import sys
 
 
 def file_exists():
@@ -79,6 +80,7 @@ if __name__ == "__main__":
     # checking accuracy of predictions
     accuracy = accuracy_score(answers, y_pred)
     print(accuracy)
+    sys.stdout.flush()
 
     # save classifier
     pk.dump(classifier, open("save.p", "wb"))

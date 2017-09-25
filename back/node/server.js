@@ -6,7 +6,7 @@
 const https = require('https');
 const PythonShell = require('python-shell');
 
-const _PORT = 8000;
+const _PORT = 8001;
 const CLASSIFIER = 'main.py';
 const options = {
     scriptPath: '../python',

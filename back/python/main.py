@@ -17,7 +17,7 @@ def file_exists():
 
 def prepare_test():
     # Importing and formatting test dataset
-    test = pd.read_csv('test.csv')
+    test = pd.read_csv('../data/test.csv')
     test = test.iloc[:, [0, 1, 3, 4, 5, 6, 8, 11]]
 
     test = test.dropna()
@@ -37,7 +37,7 @@ def prepare_test():
 
 def prepare_train():
     # Importing train datasets
-    train = pd.read_csv('train.csv')
+    train = pd.read_csv('../data/train.csv')
 
     # preparing training dataset
     train = train.iloc[:, [1, 2, 4, 5, 6, 7, 9]]

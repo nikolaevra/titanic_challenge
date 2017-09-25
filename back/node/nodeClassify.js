@@ -9,7 +9,6 @@ const options = {
     scriptPath: '../python',
 };
 
-
 function pyPredictor() {
     return new Promise((resolve, reject) => {
         PythonShell.run(CLASSIFIER, options, (err, results) => {

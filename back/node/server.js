@@ -4,25 +4,19 @@
 'use strict';
 
 const https = require('https');
-const {spawn} = require("child_process").spawn;
+const PythonShell = require('python-shell');
 
 const _PORT = 8000;
+const CLASSIFIER = 'main.py';
+const options = {
+    scriptPath: '../python',
+};
 
-function pyPredictor(process) {
+function pyPredictor() {
     return new Promise((resolve, reject) => {
-        process.on('data', (chunk) => {
-            let textChunk = chunk.toString('utf8');
-            resolve(textChunk);
-        });
-
-        process.on('close', (code) => {
-            if (code !== 0) {
-                reject(`ps process exited with code ${code}`);
-            }
-        });
-
-        process.on('error', (code) => {
-            reject(`ps process exited with code ${code}`);
+        PythonShell.run(CLASSIFIER, options, (err, results) => {
+            if (err) reject(err);
+            resolve(results);
         });
     });
 }
@@ -31,15 +25,13 @@ function pyPredictor(process) {
 https.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
 
-    let process = spawn('python',['../python/main.py']);
-
-    pyPredictor(process).then((data) => {
+    pyPredictor().then((data) => {
         res.end(data);
-    }).catch((err) =>{
+    }).catch((err) => {
         res.writeHead(500, {'Content-Type': 'text/plain'});
         res.end(err);
     });
 
 }).listen(_PORT, 'localhost');
 
-console.log(`Server running at http://localhost:${_PORT}/`);
+console.log(`Server running. Test by curl http://localhost:${_PORT}/`);

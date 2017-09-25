@@ -57,30 +57,43 @@ def prepare_train():
 
 
 if __name__ == "__main__":
-    # make sure to scale data before training
-    sc = StandardScaler()
-    x_train, y_train = prepare_train()
-    x_train = sc.fit_transform(x_train)
-    x_test, answers = prepare_test()
-    x_test = sc.fit_transform(x_test)
+    args = sys.argv[:]
+    dir = None
+    type = None
 
-    if not file_exists():
-        # Fitting Multiple Linear Regression to the Training set
-        classifier = LogisticRegression(random_state=0)
-        classifier.fit(x_train, y_train)
-        print("No save file training classifier")
+    if len(args) > 2:
+        type = args[2]
+        dir = args[1]
+
+    if type == 'accuracy' and dir is not None:
+        # make sure to scale data before training
+        sc = StandardScaler()
+        x_train, y_train = prepare_train()
+        x_train = sc.fit_transform(x_train)
+        x_test, answers = prepare_test()
+        x_test = sc.fit_transform(x_test)
+
+        if not file_exists():
+            # Fitting Multiple Linear Regression to the Training set
+            classifier = LogisticRegression(random_state=0)
+            classifier.fit(x_train, y_train)
+            print("No save file training classifier")
+
+        else:
+            classifier = pk.load(open(dir, "rb"))
+            print("Found save file loading classifier from there")
+
+        # Predicting the Test set results
+        y_pred = classifier.predict(x_test)
+
+        # checking accuracy of predictions
+        accuracy = accuracy_score(answers, y_pred)
+        print(accuracy)
+        sys.stdout.flush()
+
+        # save classifier
+        pk.dump(classifier, open(dir, "wb"))
 
     else:
-        classifier = pk.load(open("save.p", "rb"))
-        print("Found save file loading classifier from there")
-
-    # Predicting the Test set results
-    y_pred = classifier.predict(x_test)
-
-    # checking accuracy of predictions
-    accuracy = accuracy_score(answers, y_pred)
-    print(accuracy)
-    sys.stdout.flush()
-
-    # save classifier
-    pk.dump(classifier, open("save.p", "wb"))
+        print('type {0} is not supported'.format(type))
+        sys.stdout.flush()

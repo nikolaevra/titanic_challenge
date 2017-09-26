@@ -60,10 +60,13 @@ if __name__ == "__main__":
     args = sys.argv[:]
     dir = None
     type = None
+    test = None
 
     if len(args) > 2:
         type = args[2]
         dir = args[1]
+    if len(args) > 3:
+        test = args[3]
 
     if type == 'accuracy' and dir is not None:
         # make sure to scale data before training
@@ -93,6 +96,29 @@ if __name__ == "__main__":
 
         # save classifier
         pk.dump(classifier, open(dir, "wb"))
+
+    elif type == 'classify' and dir is not None and test is not None:
+
+        if not file_exists():
+            # make sure to scale data before training
+            sc = StandardScaler()
+            x_train, y_train = prepare_train()
+            x_train = sc.fit_transform(x_train)
+
+            # Fitting Multiple Linear Regression to the Training set
+            classifier = LogisticRegression(random_state=0)
+            classifier.fit(x_train, y_train)
+            print("No save file training classifier")
+
+        else:
+            classifier = pk.load(open(dir, "rb"))
+            print("Found save file loading classifier from there")
+
+        # Predicting the Test set results
+        y_pred = classifier.predict(test)
+
+        print(y_pred)
+        sys.stdout.flush()
 
     else:
         print('type {0} is not supported'.format(type))

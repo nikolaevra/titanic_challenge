@@ -5,11 +5,16 @@ const {spawn} = require('child_process');
 
 const dir_arr = __dirname.split('/');
 const par = dir_arr.slice(0, dir_arr.length - 1).join('/');
-const scr = '/python/main.py';
-const save = '/python/save.p';
+const scr = par + '/python/main.py';
+const save = par + '/python/save.p';
+const get_accuracy = [scr, save, 'accuracy'];
+let classify = [scr, save, 'classify', [1, 1, 20, 1, 0, 200]];
 
-function pyPredictor() {
-    const script = spawn('python3', [par + scr, par + save, 'accuracy']);
+// 1, 3, 4, 5, 6, 8
+// Pclass,Sex,Age,SibSp,Parch,Fare
+
+function pyPredictor(args) {
+    const script = spawn('python3', args);
 
     return new Promise((resolve, reject) => {
         script.stdout.on('data', (data) => {
@@ -24,7 +29,7 @@ function pyPredictor() {
     });
 }
 
-pyPredictor().then((data) => {
+pyPredictor(classify).then((data) => {
     console.log(data);
 }).catch((err) => {
     console.log(err);

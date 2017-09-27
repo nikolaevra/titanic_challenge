@@ -30,7 +30,7 @@ app.use('/', index);
 let USR_ACC = 0;
 
 app.get('/', function(req, res){
-    res.render(__dirname + '/views/index.html');
+    res.render(__dirname + '/views/index.ejs');
 });
 
 io.on('connection', function(socket){
@@ -104,32 +104,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-/*
- http.createServer(function (req, res) {
- //res.writeHead(200, {'Content-Type': 'text/plain'});
- //res.end("test");
-
- if (req.method === 'POST') {
- pyPredictor(config.CLASSIFY).then((data) => {
- res.writeHead(200, {'Content-Type': 'text/plain'});
- res.end(data);
- }).catch((err) => {
- res.writeHead(500, {'Content-Type': 'text/plain'});
- res.end(err);
- });
- } else if (req.method === 'GET') {
- pyPredictor(config.GETACCURACY).then((data) => {
- res.writeHead(200, {'Content-Type': 'text/plain'});
- res.end(data);
- }).catch((err) => {
- res.writeHead(500, {'Content-Type': 'text/plain'});
- res.end(err);
- });
- } else {
- res.writeHead(500, {'Content-Type': 'text/plain'});
- res.end('Invalid API request');
- }
- }).listen(config.PORT, 'localhost');
- */
-// console.log(`Server running. Test by curl http://localhost:${config.PORT}/`);

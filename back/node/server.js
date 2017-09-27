@@ -17,9 +17,6 @@ const io = require('socket.io')(http);
 
 let index = require('./routes/index');
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'html');
-
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

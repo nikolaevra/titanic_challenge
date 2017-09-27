@@ -3,7 +3,7 @@
     <title>Titanic Challenge</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 </head>
 <body>
 <form method="post" id="FSForm" action="https://nikolaevra.com/api" enctype="application/x-www-form-urlencoded" onsubmit="alert('not done yet')">
@@ -11,6 +11,7 @@
     <div class="form_table">
 
         <H1>Titanic Challenge Predictor</H1>
+        <div id="circle"></div>
         <article id="prediction_field" class="answer">Prediction:</article>
         <div class="clear"></div>
 
@@ -95,5 +96,29 @@
         <img src="img/titanic-161614_640.png" alt="titanic image" class="titanic_img">
     </div>
 </form>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    $(function () {
+        let socket = io();
+
+        socket.emit('accuracy');
+        $('#circle').css("background-color", "green");
+
+        socket.on('disconnect', function () {
+            $('#circle').css("background-color", "red");
+        });
+
+        socket.on('accuracy', function (data){
+            console.log(data);
+        });
+
+        $('form').submit(function(){
+            socket.emit('classify', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

@@ -10,7 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.5",
     "package.json": "^2.0.1",
-    "python-shell": "^0.4.0"
+    "python-shell": "^0.4.0",
+    "serve-favicon": "^2.4.5",
+    "socket.io": "^2.0.3"
   }
 }

@@ -102,7 +102,11 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     $(function () {
-        let socket = io();
+        let socket = io(window.location.protocol + '//nikolaevra.com/titanic',
+            {
+                path: '/titanic/socket.io'
+            });
+
         let accuracy_field = document.getElementById("accuracy_field");
         let prediction_field = document.getElementById("prediction_field");
 

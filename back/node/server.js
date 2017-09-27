@@ -42,7 +42,7 @@ const io = require('socket.io')(server);
 server.on('error', onError);
 server.on('listening', onListening);
 
-io.on('connection', function(socket){
+io.of('titanic').addListener('connection', function(socket){
     USR_ACC ++;
     console.log(`num of users ${USR_ACC}`);
 
@@ -89,6 +89,15 @@ function pyPredictor(args) {
         });
     });
 }
+
+app.get('/socket.io/', function(req, res) {
+    let url = require('url');
+    let url_parts = url.parse(request.url, true);
+    let query = url_parts.query;
+    let string  = '/titanic/socket.io/' + query;
+    console.log(string);
+    res.redirect(string);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

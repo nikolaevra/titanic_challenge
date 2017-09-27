@@ -1,8 +1,9 @@
 /**
  * Created by Ruslan on 9/23/2017.
+ * This is a simplified version of invoking python scripts to ease the testing and debugging process.
  */
-const {spawn} = require('child_process');
 
+const {spawn} = require('child_process');
 const dir_arr = __dirname.split('/');
 const par = dir_arr.slice(0, dir_arr.length - 1).join('/');
 const scr = par + '/python/main.py';
@@ -14,6 +15,7 @@ let classify = [scr, save, 'classify', [1, 1, 20, 1, 0, 200]];
 // Pclass,Sex,Age,SibSp,Parch,Fare
 
 function pyPredictor(args) {
+    // console.log(args);
     const script = spawn('python3', args);
 
     return new Promise((resolve, reject) => {
@@ -29,7 +31,7 @@ function pyPredictor(args) {
     });
 }
 
-pyPredictor(classify).then((data) => {
+pyPredictor(get_accuracy).then((data) => {
     console.log(data);
 }).catch((err) => {
     console.log(err);

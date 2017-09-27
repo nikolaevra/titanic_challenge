@@ -1,5 +1,6 @@
 # Importing the libraries
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -7,6 +8,7 @@ from sklearn.metrics import accuracy_score
 import pickle as pk
 import os.path
 import sys
+import json
 
 
 def file_exists():
@@ -58,17 +60,17 @@ def prepare_train():
 
 if __name__ == "__main__":
     args = sys.argv[:]
-    dir = None
-    type = None
+    direct = None
+    op_type = None
     test = None
 
     if len(args) > 2:
-        type = args[2]
-        dir = args[1]
+        op_type = args[2]
+        direct = args[1]
     if len(args) > 3:
-        test = args[3]
+        test = json.loads(args[3])
 
-    if type == 'accuracy' and dir is not None:
+    if op_type == 'accuracy' and direct is not None:
         # make sure to scale data before training
         sc = StandardScaler()
         x_train, y_train = prepare_train()
@@ -80,11 +82,11 @@ if __name__ == "__main__":
             # Fitting Multiple Linear Regression to the Training set
             classifier = LogisticRegression(random_state=0)
             classifier.fit(x_train, y_train)
-            print("No save file training classifier")
+            # print("No save file training classifier")
 
         else:
-            classifier = pk.load(open(dir, "rb"))
-            print("Found save file loading classifier from there")
+            classifier = pk.load(open(direct, "rb"))
+            # print("Found save file loading classifier from there")
 
         # Predicting the Test set results
         y_pred = classifier.predict(x_test)
@@ -95,31 +97,33 @@ if __name__ == "__main__":
         sys.stdout.flush()
 
         # save classifier
-        pk.dump(classifier, open(dir, "wb"))
+        pk.dump(classifier, open(direct, "wb"))
 
-    elif type == 'classify' and dir is not None and test is not None:
+    elif op_type == 'classify' and direct is not None and test is not None:
+        # make sure to scale data before training
+        sc = StandardScaler()
+        x_train, y_train = prepare_train()
+        x_train = sc.fit_transform(x_train)
+
+        test = np.array([test])
+        x_test = sc.fit_transform(test)
 
         if not file_exists():
-            # make sure to scale data before training
-            sc = StandardScaler()
-            x_train, y_train = prepare_train()
-            x_train = sc.fit_transform(x_train)
-
             # Fitting Multiple Linear Regression to the Training set
             classifier = LogisticRegression(random_state=0)
             classifier.fit(x_train, y_train)
-            print("No save file training classifier")
+            # print("No save file training classifier")
 
         else:
-            classifier = pk.load(open(dir, "rb"))
-            print("Found save file loading classifier from there")
+            classifier = pk.load(open(direct, "rb"))
+            # print("Found save file loading classifier from there")
 
         # Predicting the Test set results
         y_pred = classifier.predict(test)
 
-        print(y_pred)
+        print(y_pred[0])
         sys.stdout.flush()
 
     else:
-        print('type {0} is not supported'.format(type))
+        print('type {0} is not supported'.format(op_type))
         sys.stdout.flush()

@@ -31,6 +31,7 @@ app.use(logger('dev'));
 app.use('/titanic', titanic);
 
 let server = http.createServer(app);
+const io = require('socket.io')(server);
 
 server.listen(config.PORT, function(){
     console.log(`listening on http://localhost:${config.PORT}/titanic`);
@@ -38,8 +39,6 @@ server.listen(config.PORT, function(){
 
 server.on('error', onError);
 server.on('listening', onListening);
-
-const io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
     USR_ACC ++;

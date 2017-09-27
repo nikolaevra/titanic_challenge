@@ -6,81 +6,83 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 </head>
 <body>
-<form method="post" id="FSForm" action="https://nikolaevra.com/api" enctype="application/x-www-form-urlencoded" onsubmit="alert('not done yet')">
+<form id="FSForm" enctype="application/x-www-form-urlencoded">
     <!-- BEGIN_ITEMS -->
     <div class="form_table">
 
-        <H1>Titanic Challenge Predictor</H1>
-        <div id="circle"></div>
+        <div class="container">
+            <div class="product-header">
+                <div class="title">
+                    <h1>Titanic Challenge Predictor</h1>
+                </div>
+                <div id="circle" class="admin">
+                </div>
+            </div>
+        </div>
+
+        <article id="accuracy_field" class="accuracy">Classifier Accuracy:</article>
+        <div class="clear"></div>
+
         <article id="prediction_field" class="answer">Prediction:</article>
         <div class="clear"></div>
 
         <div id="q0" class="q required">
             <a class="item_anchor" name="ItemAnchor0"></a>
-            <label class="question top_question" for="RESULT_RadioButton-0">Ticket Class&nbsp;<b class="icon_required">*</b></label>
-            <select id="RESULT_RadioButton-0" name="RESULT_RadioButton-0" class="drop_down" required>
+            <label class="question top_question" for="O1">Ticket Class&nbsp;<b class="icon_required">*</b></label>
+            <select id="O1" name="RESULT_RadioButton-0" class="drop_down" required>
                 <option></option>
-                <option value="Radio-0">Class 1</option>
-                <option value="Radio-1">Class 2</option>
-                <option value="Radio-2">Class 3</option>
+                <option value="1">Class 1</option>
+                <option value="2">Class 2</option>
+                <option value="3">Class 3</option>
             </select>
         </div>
         <div id="q1" class="q required">
             <a class="item_anchor" name="ItemAnchor1"></a>
-            <label class="question top_question" for="RESULT_RadioButton-1">Gender&nbsp;<b class="icon_required">*</b></label>
-            <select id="RESULT_RadioButton-1" name="RESULT_RadioButton-1" class="drop_down" required>
+            <label class="question top_question" for="O2">Gender&nbsp;<b class="icon_required">*</b></label>
+            <select id="O2" name="RESULT_RadioButton-1" class="drop_down" required>
                 <option></option>
-                <option value="Radio-0">Male</option>
-                <option value="Radio-1">Female</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
             </select>
         </div>
         <div id="q2" class="q required">
             <a class="item_anchor" name="ItemAnchor2"></a>
-            <label class="question top_question" for="RESULT_TextField-2">Age&nbsp;<b class="icon_required">*</b></label>
-            <input type="number" min="0" max="100" name="RESULT_TextField-2" class="text_field number_field" id="RESULT_TextField-2" size="25" maxlength="255" value="" required>
+            <label class="question top_question" for="O3">Age&nbsp;<b class="icon_required">*</b></label>
+            <input type="number" min="0" max="100" name="RESULT_TextField-2" class="text_field number_field" id="O3"
+                   size="25" maxlength="255" value="" required>
         </div>
         <div id="q4" class="q required">
             <a class="item_anchor" name="ItemAnchor3"></a>
-            <label class="question top_question" for="RESULT_RadioButton-3"># of parents / children aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
-            <select id="RESULT_RadioButton-3" name="RESULT_RadioButton-3" class="drop_down" required>
+            <label class="question top_question" for="O4"># of parents / children aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
+            <select id="O4" name="RESULT_RadioButton-3" class="drop_down" required>
                 <option></option>
-                <option value="Radio-0">1</option>
-                <option value="Radio-1">2</option>
-                <option value="Radio-2">3</option>
-                <option value="Radio-3">4</option>
-                <option value="Radio-4">5</option>
-                <option value="Radio-5">6</option>
-                <option value="Radio-6">7</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
             </select>
         </div>
         <div id="q3" class="q required">
             <a class="item_anchor" name="ItemAnchor4"></a>
-            <label class="question top_question" for="RESULT_RadioButton-4"># of siblings / spouses aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
-            <select id="RESULT_RadioButton-4" name="RESULT_RadioButton-4" class="drop_down" required>
+            <label class="question top_question" for="O5"># of siblings / spouses aboard the Titanic&nbsp;<b class="icon_required">*</b></label>
+            <select id="O5" name="RESULT_RadioButton-4" class="drop_down" required>
                 <option></option>
-                <option value="Radio-0">1</option>
-                <option value="Radio-1">2</option>
-                <option value="Radio-2">3</option>
-                <option value="Radio-3">4</option>
-                <option value="Radio-4">5</option>
-                <option value="Radio-5">6</option>
-                <option value="Radio-6">7</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
             </select>
         </div>
         <div id="q5" class="q required">
             <a class="item_anchor" name="ItemAnchor5"></a>
-            <label class="question top_question" for="RESULT_TextField-5">Passanger Fare&nbsp;<b class="icon_required">*</b></label>
-            <input type="text" name="RESULT_TextField-5" class="text_field number_field" id="RESULT_TextField-5" size="25" maxlength="255" value="" required>
-        </div>
-        <div id="q6" class="q required">
-            <a class="item_anchor" name="ItemAnchor6"></a>
-            <label class="question top_question" for="RESULT_RadioButton-6">Port of Embarkation&nbsp;<b class="icon_required">*</b></label>
-            <select id="RESULT_RadioButton-6" name="RESULT_RadioButton-6" class="drop_down" required>
-                <option></option>
-                <option value="Radio-0">Cherbourg</option>
-                <option value="Radio-1">Queenstown</option>
-                <option value="Radio-2">Southampton</option>
-            </select>
+            <label class="question top_question" for="O6">Passanger Fare&nbsp;<b class="icon_required">*</b></label>
+            <input type="text" name="RESULT_TextField-5" class="text_field number_field" id="O6" size="25" maxlength="255" value="" required>
         </div>
         <div class="clear"></div>
 
@@ -101,21 +103,64 @@
 <script>
     $(function () {
         let socket = io();
+        let accuracy_field = document.getElementById("accuracy_field");
+        let prediction_field = document.getElementById("prediction_field");
 
-        socket.emit('accuracy');
-        $('#circle').css("background-color", "green");
+        socket.on('connect', () => {
+            socket.emit('accuracy');
+            $('#circle').css("background-color", "green");
+        });
 
-        socket.on('disconnect', function () {
+        socket.on('disconnect', () => {
             $('#circle').css("background-color", "red");
         });
 
-        socket.on('accuracy', function (data){
-            console.log(data);
+        socket.on('accuracy', (data) => {
+            let parsed = JSON.parse(data);
+            console.log(`accuracy ${parsed.val}`);
+            accuracy_field.innerText = `Classifier Accuracy: ${parsed.val}`;
         });
 
-        $('form').submit(function(){
-            socket.emit('classify', $('#m').val());
-            $('#m').val('');
+        socket.on('classify', (data) => {
+            let parsed = JSON.parse(data);
+            console.log(`classify ${parsed.val}`);
+            prediction_field.innerText = `Prediction: ${parsed.val}`;
+        });
+
+        $('#FSForm').submit(() => {
+            let form_obj = $("#FSForm").serializeArray();
+            let form_arr = [];
+
+            for (let i = 0; i < form_obj.length - 1; i ++) {
+                let item = form_obj[i];
+
+                if (item.name === "RESULT_RadioButton-1") {
+                    if (item.value === "male") {
+                        form_arr.push(1);
+                    } else {
+                        form_arr.push(0);
+                    }
+                } else if (item.name === "RESULT_RadioButton-0") {
+                    if (item.value === "2") {
+                        // format for ticket class
+                        // class 3 = [0, 1]
+                        // class 2 = [1, 0]
+                        // class 1 = [0, 0]
+                        form_arr.push(1);
+                        form_arr.push(0);
+                    } else if (item.value === "1") {
+                        form_arr.push(0);
+                        form_arr.push(1);
+                    } else {
+                        form_arr.push(0);
+                        form_arr.push(0);
+                    }
+                } else {
+                    form_arr.push(parseInt(item.value));
+                }
+            }
+
+            socket.emit('classify', form_arr);
             return false;
         });
     });

@@ -11,20 +11,18 @@ import sys
 import json
 
 
-def file_exists():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    filepath = dir_path + "/save.p"
+def file_exists(filepath):
     return os.path.isfile(filepath)
 
 
 def prepare_test():
     # Importing and formatting test dataset
-    test = pd.read_csv('../data/test.csv')
-    test = test.iloc[:, [0, 1, 3, 4, 5, 6, 8, 11]]
+    test__data = pd.read_csv('../data/test.csv')
+    test__data = test__data.iloc[:, [0, 1, 3, 4, 5, 6, 8, 11]]
 
-    test = test.dropna()
-    y = test.iloc[:, -1].values
-    x = test.iloc[:, 1:-1].values
+    test__data = test__data.dropna()
+    y = test__data.iloc[:, -1].values
+    x = test__data.iloc[:, 1:-1].values
 
     # Encoding categorical data
     le = LabelEncoder()
@@ -64,6 +62,10 @@ if __name__ == "__main__":
     op_type = None
     test = None
 
+    if len(args) > 1:
+        if args[1] == 'debug':
+            op_type = 'accuracy'
+            direct = ''
     if len(args) > 2:
         op_type = args[2]
         direct = args[1]
@@ -78,7 +80,7 @@ if __name__ == "__main__":
         x_test, answers = prepare_test()
         x_test = sc.fit_transform(x_test)
 
-        if not file_exists():
+        if not file_exists(direct):
             # Fitting Multiple Linear Regression to the Training set
             classifier = LogisticRegression(random_state=0)
             classifier.fit(x_train, y_train)
@@ -108,7 +110,7 @@ if __name__ == "__main__":
         test = np.array([test])
         x_test = sc.fit_transform(test)
 
-        if not file_exists():
+        if not file_exists(direct):
             # Fitting Multiple Linear Regression to the Training set
             classifier = LogisticRegression(random_state=0)
             classifier.fit(x_train, y_train)
@@ -121,7 +123,11 @@ if __name__ == "__main__":
         # Predicting the Test set results
         y_pred = classifier.predict(test)
 
-        print(y_pred[0])
+        if (y_pred[0] == 1):
+            print('SURVIVED')
+        else:
+            print('DID NOT SURVIVE')
+
         sys.stdout.flush()
 
     else:

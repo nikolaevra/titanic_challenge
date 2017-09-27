@@ -6,13 +6,34 @@ body{
     background-position: 50% 50%;
 }
 
+.product-header {
+    clear: both;
+}
+
+.product-header .title {
+    float: left;
+}
+
+.product-header .admin {
+    float: left;
+    margin-left: 10px;
+}
+
+.product-header .description {
+}
+
+.container {
+    display: flex;
+}
+
 .icon_required {
  color: red;
 }
 
 #circle {
-    width: 50px;
-    height: 50px;
+    width: 20px;
+    height: 20px;
+    margin-top: 25px;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;
@@ -28,6 +49,13 @@ body{
 
 .answer {
     background: #1795FF;
+    padding: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.accuracy {
+    background: #ff004b;
     padding: 20px;
     font-size: 20px;
     color: white;

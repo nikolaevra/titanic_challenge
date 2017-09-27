@@ -40,16 +40,24 @@ io.on('connection', function(socket){
     });
 
     socket.on('classify', (msg) => {
-        pyPredictor([config.SCRIPT, config.SAVE, 'classify', msg]).then((data) => {
-            socket.emit(data);
+        pyPredictor([config.SCRIPT, config.SAVE, 'classify', JSON.stringify(msg)]).then((data) => {
+            socket.emit('classify', JSON.stringify({
+                val: data.toString('utf8').slice(0, -1)
+            }));
             console.log(`classified: ${data}`);
+        }).catch((data) => {
+            console.log(`err: ${data}`);
         })
     });
 
     socket.on('accuracy', () => {
         pyPredictor(config.GETACCURACY).then((data) => {
-            socket.emit(data);
+            socket.emit('accuracy', JSON.stringify({
+                val: data.toString('utf8').slice(0, -1)
+            }));
             console.log(`accuracy: ${data}`);
+        }).catch((data) => {
+            console.log(`err: ${data}`);
         })
     });
 });

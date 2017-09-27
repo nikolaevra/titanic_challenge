@@ -27,7 +27,7 @@ app.use('/', index);
 let USR_ACC = 0;
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/views/index.html');
+    res.render(__dirname + '/views/index.html');
 });
 
 io.on('connection', function(socket){

@@ -7,16 +7,16 @@ const {spawn} = require('child_process');
 const path = require('path');
 const config = require('./config.js');
 const express = require('express');
-let app = express();
-
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const http = require('http');
+let debug = require('debug')('untitled:server');
 
-
-let index = require('./routes/index');
+let app = express();
+let USR_ACC = 0;
+let titanic = require('./routes/titanic');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,15 +28,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', index);
-
-let USR_ACC = 0;
+app.use('/titanic', titanic);
 
 let server = http.createServer(app);
 
 server.listen(config.PORT, function(){
     console.log(`listening on http://localhost:${config.PORT}`);
 });
+
+server.on('error', onError);
+server.on('listening', onListening);
 
 const io = require('socket.io')(server);
 
@@ -71,9 +72,6 @@ io.on('connection', function(socket){
         })
     });
 });
-
-server.on('error', onError);
-server.on('listening', onListening);
 
 function pyPredictor(args) {
     const script = spawn('python3', args);
@@ -142,6 +140,11 @@ function onError(error) {
  */
 
 function onListening() {
+    let addr = server.address();
+    let bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
 }
 
 module.exports = app;

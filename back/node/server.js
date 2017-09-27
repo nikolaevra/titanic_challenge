@@ -23,12 +23,12 @@ app.set('view engine', 'ejs');
 app.set('port', config.PORT);
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use('/titanic', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(logger('dev'));
-app.use('/titanic', titanic);
+app.use('/', titanic);
 
 // let server = http.createServer(app);
 

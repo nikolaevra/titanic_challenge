@@ -12,15 +12,18 @@ let app = express();
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const logger = require('morgan');
+const http = require('http');
+
 
 let index = require('./routes/index');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('port', config.PORT);
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -29,9 +32,13 @@ app.use('/', index);
 
 let USR_ACC = 0;
 
-app.get('/', function(req, res){
-    res.render(__dirname + '/views/index.ejs');
+let server = http.createServer(app);
+
+server.listen(config.PORT, function(){
+    console.log(`listening on http://localhost:${config.PORT}`);
 });
+
+const io = require('socket.io')(server);
 
 io.on('connection', function(socket){
     USR_ACC ++;
@@ -65,9 +72,8 @@ io.on('connection', function(socket){
     });
 });
 
-http.listen(config.PORT, function(){
-    console.log(`listening on http://localhost:${config.PORT}`);
-});
+server.on('error', onError);
+server.on('listening', onListening);
 
 function pyPredictor(args) {
     const script = spawn('python3', args);
@@ -102,5 +108,40 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    let bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+}
 
 module.exports = app;

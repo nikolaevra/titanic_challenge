@@ -30,12 +30,14 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use('/titanic', titanic);
 
-let server = http.createServer(app);
-const io = require('socket.io')(server);
+// let server = http.createServer(app);
 
-server.listen(config.PORT, function(){
+
+let server = app.listen(config.PORT, function(){
     console.log(`listening on http://localhost:${config.PORT}/titanic`);
 });
+
+const io = require('socket.io')(server);
 
 server.on('error', onError);
 server.on('listening', onListening);
